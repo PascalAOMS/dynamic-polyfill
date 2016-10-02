@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "gh://es-dynamic-polyfill"
+    "url": "https://github.com/es-dynamic-polyfill"
   },
   "keywords": [
     "es6",
