@@ -1,20 +1,39 @@
 
-//export default function() {
-
-    function fill(features = 'Promise, fetch',
-                  flags = 'gated',
-                  minify = true) {
+export default function(fills, options, compress = true) {
 
 
-        let js = document.createElement('script');
+    console.log(fills);
 
-        js.src = `https://cdn.polyfill.io/v2/polyfill.${minify ? 'min.' : null}js?features=${features}&flags=${flags}`;
+    let formattedFills = fills.replace(/\s/g, ''),
+        listedFills    = formattedFills.split(','),
+        winObjs        = [];
 
-        document.head.appendChild(js)
+    listedFills.map(fill => winObjs.push(window[fill]));
 
+    console.log(winObjs);
+
+    if( winObjs.indexOf(undefined) === -1 ) {
+        console.log('no fill needed');
+        return;
     }
 
-    window.Promise && window.fetch ? null : fill();
+
+    let minify   = '',
+        features = '',
+        flags    = '';
+
+    if( compress ) minify = '.min';
+
+    if( fills ) features = `?features=${formattedFills}`;
+
+    if( options ) flags = `&flags=${options.replace(/\s,|,\s|,/g, '|')}`;
 
 
-//}
+    let js = document.createElement('script');
+
+    js.src = `https://cdn.polyfill.io/v2/polyfill${minify}.js${features + flags}`;
+
+    document.head.appendChild(js)
+
+
+}
