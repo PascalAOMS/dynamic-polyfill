@@ -1,6 +1,6 @@
 {
   "name": "es-dynamic-polyfill",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Dynamically polyfill ES2015+ features only when needed by the browser.",
   "main": "index.js",
   "scripts": {
