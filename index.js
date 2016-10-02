@@ -4,17 +4,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-exports.default = function (_ref) {
-    var _ref$fills = _ref.fills;
-    var fills = _ref$fills === undefined ? '' : _ref$fills;
-    var _ref$options = _ref.options;
-    var options = _ref$options === undefined ? '' : _ref$options;
-    var _ref$minify = _ref.minify;
-    var minify = _ref$minify === undefined ? true : _ref$minify;
-    var afterFill = _ref.afterFill;
+exports.default = function (fills, options) {
+    var compress = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
 
 
-    console.log(afterFill);
+    console.log(fills);
 
     var formattedFills = fills.replace(/\s/g, ''),
         listedFills = formattedFills.split(','),
@@ -28,15 +22,14 @@ exports.default = function (_ref) {
 
     if (winObjs.indexOf(undefined) === -1) {
         console.log('no fill needed');
-        afterFill();
         return;
     }
 
-    var min = '',
+    var minify = '',
         features = '',
         flags = '';
 
-    if (minify) min = '.min';
+    if (compress) minify = '.min';
 
     if (fills) features = '?features=' + formattedFills;
 
@@ -44,14 +37,7 @@ exports.default = function (_ref) {
 
     var js = document.createElement('script');
 
-    js.src = 'https://cdn.polyfill.io/v2/polyfill' + min + '.js' + (features + flags);
-
-    js.onload = function () {
-        return afterFill();
-    };
-    js.onerror = function () {
-        return afterFill(new Error('Failed to load polyfill. Are the options spelled correctly?', js.src));
-    };
+    js.src = 'https://cdn.polyfill.io/v2/polyfill' + minify + '.js' + (features + flags);
 
     document.head.appendChild(js);
 };
