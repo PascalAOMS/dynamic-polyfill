@@ -1,6 +1,6 @@
 {
   "name": "es-dynamic-polyfill",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Dynamically polyfill ES2015+ features only when needed by the browser.",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,6 @@
     "polyfill",
     "dynamic"
   ],
-  "author": "Pascal Klau",
+  "author": "Pascal Klau <email@artofmyself.com> (http://artofmyself.com)",
   "license": "MIT"
 }
