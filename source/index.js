@@ -1,12 +1,14 @@
 
 //export default function() {
 
-    function fill() {
+    function fill(features = 'Promise, fetch',
+                  flags = 'gated',
+                  minify = true) {
 
-        var features = 'Promise,fetch,String.prototype.includes',
-            js = document.createElement('script');
 
-        js.src = 'https://cdn.polyfill.io/v2/polyfill.min.js?features='+features+'&flags=gated';
+        let js = document.createElement('script');
+
+        js.src = `https://cdn.polyfill.io/v2/polyfill.${minify ? 'min.' : null}js?features=${features}&flags=${flags}`;
 
         document.head.appendChild(js)
 
