@@ -1,15 +1,5 @@
 
-// polyfill({
-//     features: 'fetch, Promise',
-//     options: 'gated, always',
-//     minify: false,
-//     afterFill() {
-//         console.log('after fill');
-//     }
-// })
 export default function({fills = '', options = '', minify = true, afterFill}) {
-
-    console.log(afterFill);
 
     let formattedFills = fills.replace(/\s/g, ''),
         listedFills    = formattedFills.split(','),
@@ -17,10 +7,7 @@ export default function({fills = '', options = '', minify = true, afterFill}) {
 
     listedFills.map(fill => winObjs.push(window[fill]));
 
-    console.log(winObjs);
-
     if( winObjs.indexOf(undefined) === -1 ) {
-        console.log('no fill needed');
         afterFill()
         return;
     }
@@ -45,7 +32,5 @@ export default function({fills = '', options = '', minify = true, afterFill}) {
     js.onerror = () => afterFill(new Error('Failed to load polyfill. Are the options spelled correctly?', js.src));
 
     document.head.appendChild(js);
-
-
 
 }
