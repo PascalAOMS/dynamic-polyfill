@@ -4,11 +4,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-exports.default = function (fills, options) {
-    var compress = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+exports.default = function (_ref) {
+    var _ref$fills = _ref.fills;
+    var fills = _ref$fills === undefined ? '' : _ref$fills;
+    var _ref$options = _ref.options;
+    var options = _ref$options === undefined ? '' : _ref$options;
+    var _ref$minify = _ref.minify;
+    var minify = _ref$minify === undefined ? true : _ref$minify;
+    var afterFill = _ref.afterFill;
 
-
-    console.log(fills);
 
     var formattedFills = fills.replace(/\s/g, ''),
         listedFills = formattedFills.split(','),
@@ -18,18 +22,16 @@ exports.default = function (fills, options) {
         return winObjs.push(window[fill]);
     });
 
-    console.log(winObjs);
-
-    if (winObjs.indexOf(undefined) === -1) {
-        console.log('no fill needed');
+    if (winObjsindexOf(undefined) === -1) {
+        afterFill();
         return;
     }
 
-    var minify = '',
+    var min = '',
         features = '',
         flags = '';
 
-    if (compress) minify = '.min';
+    if (minify) min = '.min';
 
     if (fills) features = '?features=' + formattedFills;
 
@@ -37,7 +39,14 @@ exports.default = function (fills, options) {
 
     var js = document.createElement('script');
 
-    js.src = 'https://cdn.polyfill.io/v2/polyfill' + minify + '.js' + (features + flags);
+    js.src = 'https://cdn.polyfill.io/v2/polyfill' + min + '.js' + (features + flags);
+
+    js.onload = function () {
+        return afterFill();
+    };
+    js.onerror = function () {
+        return afterFill(new Error('Failed to load polyfill. Are the options spelled correctly?', js.src));
+    };
 
     document.head.appendChild(js);
 };
