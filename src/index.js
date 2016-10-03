@@ -7,7 +7,7 @@ export default function({fills = '', options = '', minify = true, afterFill}) {
 
     listedFills.map(fill => winObjs.push(window[fill]));
 
-    if( winObjsindexOf(undefined) === -1 ) {
+    if( winObjs.indexOf(undefined) === -1 ) {
         afterFill()
         return
     }
