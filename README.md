@@ -55,7 +55,7 @@ Put your ES2015+ code in this callback to make sure the polyfills are loaded fir
 Example:
 ```javascript
 polyfill({
-    fills: 'default, fetch'
+    fills: 'default, fetch',
     afterFill() {
         main()
     }
