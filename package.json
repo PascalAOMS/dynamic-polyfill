@@ -20,5 +20,8 @@
     "dynamic"
   ],
   "author": "Pascal Klau <email@artofmyself.com> (http://artofmyself.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.16.0"
+  }
 }
