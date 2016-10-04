@@ -1,5 +1,5 @@
 
-export default function({fills = '', options = '', minify = true, afterFill}) {
+export default function({fills = '', options = '', minify = true, callback = ''}) {
 
     let formattedFills = fills.replace(/\s/g, ''),
         listedFills    = formattedFills.split(','),
@@ -8,7 +8,7 @@ export default function({fills = '', options = '', minify = true, afterFill}) {
     listedFills.map(fill => winObjs.push(window[fill]));
 
     if( winObjs.indexOf(undefined) === -1 ) {
-        afterFill()
+        callback()
         return
     }
 
@@ -19,14 +19,14 @@ export default function({fills = '', options = '', minify = true, afterFill}) {
 
     if( minify ) min = '.min';
 
-    if( fills ) features = `?features=${formattedFills}`;
+    if( fills ) features = `features=${formattedFills}`;
 
-    if( options ) flags = `&flags=${options.replace(/\s,|,\s|,/g, '|')}`;
+    if( options ) flags = `&flags=${options.replace(/\s/g, '')}`;
 
 
     let js = document.createElement('script');
 
-    js.src = `https://cdn.polyfill.io/v2/polyfill${min}.js${features + flags}`;
+    js.src = `https://cdn.polyfill.io/v2/polyfill${min}.js?${features + flags + callback}`;
 
     js.onload = () => afterFill();
     js.onerror = () => afterFill(new Error('Failed to load polyfill. Are the options spelled correctly?', js.src));
