@@ -8,7 +8,7 @@ Write ES2015+ like fetch, Promise or Array.prototype.includes for modern browser
 
 Using the API it detects what browser is being used and polyfills only what is not supported. So modern browsers do not need to download old ES5 code.
 
-_**Note:** Does not polyfill synthetic sugar like **Arrow Functions** or **Template Strings**. Use compilers like Babel for that._
+_**Note:** Does not polyfill syntactic sugar like **Arrow Functions** or **Template Strings**. Use compilers like Babel for that._
 
 ## How does it work?
 Giving a list of ES2015+ features the script checks if they are supported in the target browser. If not, it creates a link like `https://cdn.polyfill.io/v2/polyfill.js?features=fetch` and inserts a script tag to make the HTTP request to load only the needed polyfills.
@@ -52,7 +52,7 @@ Put your ES2015+ code in this callback to make sure the polyfills are loaded fir
 Example:
 ```javascript
 polyfill({
-    fills: 'default, fetch'
+    fills: 'default, fetch',
     afterFill() {
         main()
     }
