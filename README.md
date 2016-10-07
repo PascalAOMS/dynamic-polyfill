@@ -11,7 +11,8 @@ Using the API it detects what browser is being used and polyfills only what is n
 _**Note:** Does not polyfill syntactic sugar like **Arrow Functions** or **Template Strings**. Use compilers like Babel for that._
 
 ## How does it work?
-Giving a list of ES2015+ features the script checks if they are supported in the target browser. If not, it creates a link like `https://cdn.polyfill.io/v2/polyfill.js?features=fetch` and inserts a script tag to make the HTTP request to load only the needed polyfills.
+Giving a list of ES2015+ features the script checks if they are supported in the target browser. If not, it creates a link like `https://cdn.polyfill.io/v2/polyfill.js?features=fetch`, inserts a script tag to make the HTTP request and loads only the needed polyfills.  
+The tag is put at the bottom of the page with the `async` attribute.
 
 ## How to use?
 ```javascript
@@ -26,6 +27,8 @@ polyfill({
     }
 })
 ```
+
+_**Note:** As of now not all available API options are supported here. [Take a look at the full reference list.](https://polyfill.io/v2/docs/api)_
 
 ### Fills
 `fetch, Promise` (default: empty)  

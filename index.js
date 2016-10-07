@@ -33,13 +33,16 @@ exports.default = function (_ref) {
 
     if (minify) min = '.min';
 
-    if (fills) features = '?features=' + formattedFills;
+    if (fills) features = 'features=' + formattedFills;
 
-    if (options) flags = '&flags=' + options.replace(/\s,|,\s|,/g, '|');
+    if (options) flags = '&flags=' + options.replace(/\s/g, '');
 
     var js = document.createElement('script');
 
-    js.src = 'https://cdn.polyfill.io/v2/polyfill' + min + '.js' + (features + flags);
+    js.src = 'https://cdn.polyfill.io/v2/polyfill' + min + '.js?' + (features + flags);
+    js.async = true;
+
+    document.getElementsByTagName('body')[0].appendChild(js);
 
     js.onload = function () {
         return afterFill();
@@ -47,6 +50,4 @@ exports.default = function (_ref) {
     js.onerror = function () {
         return afterFill(new Error('Failed to load polyfill. Are the options spelled correctly?', js.src));
     };
-
-    document.head.appendChild(js);
 };
