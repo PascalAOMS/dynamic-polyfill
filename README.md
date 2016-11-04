@@ -16,7 +16,7 @@ The tag is put at the bottom of the page with the `async` attribute.
 
 ## How to use?
 ```javascript
-import polyfill from es-dynamic-polyfill
+import polyfill from dynamic-polyfill
 
 polyfill({
     fills: 'fetch, Promise',

@@ -1,7 +1,7 @@
 {
-  "name": "es-dynamic-polyfill",
-  "version": "0.0.8",
-  "description": "Dynamically polyfill ES2015+ features only when needed by the browser.",
+  "name": "dynamic-polyfill",
+  "version": "0.1",
+  "description": "Dynamically polyfill only when needed by the browser. Complementary to Polyfill.io",
   "main": "index.js",
   "scripts": {
     "build": "babel src --presets babel-preset-es2015 --out-dir ./",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pascalaoms/es-dynamic-polyfill"
+    "url": "https://github.com/pascalaoms/dynamic-polyfill"
   },
   "keywords": [
     "es6",
@@ -17,7 +17,8 @@
     "es2015",
     "es2016",
     "polyfill",
-    "dynamic"
+    "dynamic",
+    "polfill.io"
   ],
   "author": "Pascal Klau <email@artofmyself.com> (http://artofmyself.com)",
   "license": "MIT",
