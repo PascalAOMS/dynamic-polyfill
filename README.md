@@ -36,7 +36,7 @@ _**Note:** As of now not all available API options are supported here. [Take a l
 `fetch, Promise` (default: empty)  
 [A list of what can be polyfilled.](https://polyfill.io/v2/docs/features/)  
 Put them in a comma-separated string.
-If empty, as default marked features are being used.
+If empty, as default marked features on the website are being used.
 
 ### Options
 `gated, always` (default: empty)
