@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Dynamic Polyfill Test</title>
+</head>
+<body>
+
+    <h1>Dynamic Polyfill</h1>
+    <p>Testing 'Array.prototype.values' - not working in Chrome 58.<br>
+    Open the console to see the output.</p>
+
+
+    <script src="../index.js"></script>
+    <script>
+
+        polyfill({
+            fills: 'Array.prototype.values',
+            rum: false,
+            afterFill() {
+                main()
+            }
+        })
+
+
+        function main() {
+            let arr = ['w', 'y', 'k', 'o', 'p'],
+                iterator = arr.values()
+
+            for( let letter of iterator ) {
+                console.log(letter);
+            }
+        }
+
+    </script>
+
+</body>
+</html>
