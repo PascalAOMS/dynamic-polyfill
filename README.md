@@ -17,6 +17,8 @@ The tag is put at the bottom of the page with the `async` attribute.
 ## How to use?
 ```javascript
 import polyfill from 'dynamic-polyfill'
+// or use require:
+// const polyfill = require('dynamic-polyfill')
 
 polyfill({
     fills: 'fetch, Promise',
