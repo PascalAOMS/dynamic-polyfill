@@ -16,14 +16,14 @@ The tag is put at the bottom of the page with the `async` attribute.
 
 ## How to use?
 ```javascript
-import polyfill from dynamic-polyfill
+import polyfill from 'dynamic-polyfill'
 
 polyfill({
     fills: 'fetch, Promise',
     options: 'gated',
     minify: false,
     afterFill() {
-        main();
+        main()
     }
 })
 ```
@@ -48,6 +48,18 @@ If empty, as default marked features are being used.
 ### Minify
 `true | false` (default: true)  
 Set to false for deeper insight of what is being polyfilled.
+
+
+
+### Real User Monitoring
+`rum: false (default: true)`
+Allows the polyfill service to gather performance data about itself using the [resource timing API](https://developer.mozilla.org/en-US/docs/Web/API/Resource_Timing_API/Using_the_Resource_Timing_API) and to perform feature detection to improve our browser targeting.
+
+[More info under `rum`.](https://polyfill.io/v2/docs/api)
+
+
+> The service will default it to true in the future hence the module default choice. Set `rum: false` if you want to opt out.
+
 
 ### After Fill
 Put your ES2015+ code in this callback to make sure the polyfills are loaded first.
