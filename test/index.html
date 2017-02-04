@@ -14,7 +14,7 @@
     Open the console to see the output.</p>
 
 
-    <script src="../index.js"></script>
+    <script src="../src/index.js"></script>
     <script>
 
         polyfill({
@@ -31,18 +31,16 @@
         // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
         function fetchData() {
 
-            let url = 'https://api.github.com/users/pascalaoms'
-            fetch(url)
-                .then(res => res.json())
-                .then(res => console.log('fetch:', res))
-
-
+            fetch('https://api.github.com/users/pascalaoms')
+                .then(function(res) {
+                    console.log('fetch:', res)
+                })
         }
 
 
         // https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/after
         function elementAfter() {
-            let parent = document.createElement('div'),
+            var parent = document.createElement('div'),
                 child  = document.createElement('p'),
                 span   = document.createElement('span');
 
