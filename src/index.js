@@ -1,37 +1,60 @@
+function polyfill({ fills, options = '', minify = true, rum = true, afterFill }) {
 
-export default function({fills = '', options = '', minify = true, afterFill}) {
 
-    let formattedFills = fills.replace(/\s/g, ''),
-        listedFills    = formattedFills.split(','),
-        winObjs        = [];
+    let needsPolyfill = [] // contains list of all to be polyfilled features
 
-    listedFills.map(fill => winObjs.push(window[fill]));
 
-    if( winObjs.indexOf(undefined) === -1 ) {
-        afterFill()
-        return
+    // check if 'always' flag is set
+    // if yes, no need to check for support since polyfills are loaded anyway
+    if( options.indexOf('always') === -1 ) {
+
+
+        if( fills !== undefined ) {
+
+            fills.forEach(fill => {
+
+                // set the fill against the window object
+                let reducedFill = fill.split('.').reduce((k, v) => k[v], window)
+
+                // check if window supports the fill
+                if( reducedFill === undefined ) {
+                    needsPolyfill.push(fill)
+                }
+
+            })
+
+            // if no polyfills are needed, run callback
+            if( needsPolyfill.length === 0 ) {
+                afterFill()
+                return
+            }
+        }
+
+    } else {
+        needsPolyfill = fills
     }
 
 
-    let min      = '',
-        features = '',
-        flags    = '';
+    let min      = minify ? '.min' : '',
 
-    if( minify ) min = '.min';
+        features = fills ? `features=${needsPolyfill.join(',')}` : '',
 
-    if( fills ) features = `features=${formattedFills}`;
+        flags    = options ? `\&flags=${options.join(',')}` : '',
 
-    if( options ) flags = `&flags=${options.replace(/\s/g, '')}`;
+        monitor  = rum ? '\&rum=1' : '', // not set to rum=0 since it loads scripts anyway
+
+        js       = document.createElement('script')
 
 
-    let js = document.createElement('script');
+    js.src = `https://cdn.polyfill.io/v2/polyfill${min}.js?${features + flags + monitor}`
+    js.async = true
 
-    js.src = `https://cdn.polyfill.io/v2/polyfill${min}.js?${features + flags}`;
-    js.async = true;
+    document.body.appendChild(js)
 
-    document.body.appendChild(js);
+    js.onload = () => afterFill()
+    js.onerror = () => afterFill(new Error('Failed to load polyfill. Please write an issue here: https://github.com/PascalAOMS/dynamic-polyfill/issues', js.src))
 
-    js.onload = () => afterFill();
-    js.onerror = () => afterFill(new Error('Failed to load polyfill. Are the options spelled correctly?', js.src));
 
 }
+
+module.exports = polyfill

@@ -4,8 +4,7 @@
   "description": "Dynamically polyfill only when needed by the browser. Complementary to Polyfill.io",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --presets babel-preset-es2015 --out-dir ./",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "babel src --presets babel-preset-es2015 --out-dir ./"
   },
   "repository": {
     "type": "git",
@@ -23,6 +22,7 @@
   "author": "Pascal Klau <email@artofmyself.com> (http://artofmyself.com)",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.16.0"
+    "babel-cli": "^6.22.2",
+    "babel-preset-es2015": "^6.22.0"
   }
 }
