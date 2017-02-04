@@ -1,31 +1,44 @@
-Made for easier use of the [Polyfill.io API](polyfill.io) to detect browser support and offer dynamic polyfills.
+| Size  | Support |
+| ----- | ------- |
+| 2 KB  | >= IE8  |
 
-**Size: < 1 KB**  
-**Dependencies: none**
+<p>
+    <a href="https://www.npmjs.com/package/dynamic-polyfill"><img src="https://img.shields.io/david/pascalaoms/dynamic-polyfill.svg" alt="Version"></a>
+
+    <a href="https://www.npmjs.com/package/dynamic-polyfill"><img src="https://img.shields.io/npm/v/dynamic-polyfill.svg" alt="Version"></a>
+
+    <a href="https://www.npmjs.com/package/dynamic-polyfill"><img src="https://img.shields.io/npm/dm/dynamic-polyfill.svg" alt="Downloads"></a>
+</p>
 
 ## What's the use?
-Write ES2015+ like fetch, Promise or Array.prototype.includes for modern browsers without the need to compile it.
+Made for easier use of the [Polyfill.io API](polyfill.io) to detect browser support and offer dynamic polyfills.
 
-Using the API it detects what browser is being used and polyfills only what is not supported. So modern browsers do not need to download old ES5 code.
+Write modern code like fetch, Promise or Array.prototype.includes without the need to transform it or locally load a polyfill.
 
-_**Note:** Does not polyfill syntactic sugar like **Classes, enhanced Object literals** and features like **Arrow Functions** or **Template Strings**. Use compilers like Babel for that._
+> _**Note:** Does not polyfill syntactic sugar like **Classes, enhanced Object literals** and features like **Arrow Functions** or **Template Strings**. Use compilers like Babel for that._
 
 ## How does it work?
-Giving a list of ES2015+ features the script checks if they are supported in the target browser. If not, it creates a link like `https://cdn.polyfill.io/v2/polyfill.js?features=fetch`, inserts a script tag to make the HTTP request and loads only the needed polyfills.  
+The module tests the given functions in `fills` (see below) against the window to check if the browser supports everything.
+
+If not, it creates a link like `https://cdn.polyfill.io/v2/polyfill.js?features=fetch`, inserts a script tag to make the HTTP request and loads only the needed polyfills.  
 The tag is put at the bottom of the page with the `async` attribute.
 
 ## How to use?
+NPM: `npm i dynamic-polyfill -S`  
+Yarn: `yarn add dynamic-polyfill`
+
 ```javascript
 import polyfill from 'dynamic-polyfill'
 // or use require:
 // const polyfill = require('dynamic-polyfill')
 
 polyfill({
-    fills: 'fetch, Promise',
-    options: 'gated',
+    fills: ['fetch', 'Array.prototype.includes'],
+    options: ['gated', 'always'],
     minify: false,
+    rum: false,
     afterFill() {
-        main()
+        // callback
     }
 })
 ```
@@ -33,13 +46,13 @@ polyfill({
 _**Note:** As of now not all available API options are supported here. [Take a look at the full reference list.](https://polyfill.io/v2/docs/api)_
 
 ### Fills
-`fetch, Promise` (default: empty)  
+`['fetch', 'Array.prototype.includes']` (default: empty)  
 [A list of what can be polyfilled.](https://polyfill.io/v2/docs/features/)  
-Put them in a comma-separated string.
+Put them in an array of strings.
 If empty, as default marked features on the website are being used.
 
 ### Options
-`gated, always` (default: empty)
+`['gated', 'always']` (default: empty)
 
 **always**  
     Polyfill should be included regardless of whether it is required by the user-agent making the request. If there are multiple browser-specific variants of the polyfill, the default one will be used for browser that doesn't actually require the polyfill. In some cases where the only way of implementing a polyfill is to use browser-specific proprietary technology, the default variant may be empty.
@@ -54,7 +67,7 @@ Set to false for deeper insight of what is being polyfilled.
 
 
 ### Real User Monitoring
-`rum: false (default: true)`
+`rum: false` (default: true)  
 Allows the polyfill service to gather performance data about itself using the [resource timing API](https://developer.mozilla.org/en-US/docs/Web/API/Resource_Timing_API/Using_the_Resource_Timing_API) and to perform feature detection to improve our browser targeting.
 
 [More info under `rum`.](https://polyfill.io/v2/docs/api)
@@ -64,12 +77,12 @@ Allows the polyfill service to gather performance data about itself using the [r
 
 
 ### After Fill
-Put your ES2015+ code in this callback to make sure the polyfills are loaded first.
+Put your modern code in this callback to make sure the polyfills are loaded first.
 
 Example:
 ```javascript
 polyfill({
-    fills: 'default, fetch',
+    fills: ['fetch'],
     afterFill() {
         main()
     }
