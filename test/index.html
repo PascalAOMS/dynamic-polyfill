@@ -7,31 +7,51 @@
 <body>
 
     <h1>Dynamic Polyfill</h1>
-    <p>Testing 'Array.prototype.values' - not working in Chrome 58.<br>
+    <p>Testing 'fetch' and 'Element.prototype.after'.<br>
+    Check <a href="https://polyfill.io/v2/docs/features/">https://polyfill.io/v2/docs/features/</a>
+    to see if supported in your browser.<br>
+    <br>
     Open the console to see the output.</p>
 
 
-    <script src="../src/index.js"></script>
+    <script src="../index.js"></script>
     <script>
 
         polyfill({
-            fills: 'Array.prototype.values',
+            fills: ['Element.prototype.after', 'fetch'],
+            minify: false,
             rum: false,
             afterFill() {
-                main()
+                fetchData()
+                elementAfter()
             }
         })
 
 
-        function main() {
-            let arr = ['w', 'y', 'k', 'o', 'p'],
-                iterator = arr.values()
+        // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+        function fetchData() {
 
-            for( let letter of iterator ) {
-                console.log(letter);
-            }
+            let url = 'https://api.github.com/users/pascalaoms'
+            fetch(url)
+                .then(res => res.json())
+                .then(res => console.log('fetch:', res))
+
+
         }
 
+
+        // https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/after
+        function elementAfter() {
+            let parent = document.createElement('div'),
+                child  = document.createElement('p'),
+                span   = document.createElement('span');
+
+            parent.appendChild(child)
+
+            child.after(span)
+
+            console.log('Element.after:', parent.outerHTML)
+        }
     </script>
 
 </body>
