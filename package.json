@@ -1,6 +1,6 @@
 {
   "name": "dynamic-polyfill",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Dynamically polyfill only when needed by the browser. Complementary to Polyfill.io",
   "main": "index.js",
   "scripts": {
