@@ -10,6 +10,9 @@
     <a href="https://www.npmjs.com/package/dynamic-polyfill"><img src="https://img.shields.io/npm/dm/dynamic-polyfill.svg" alt="Downloads"></a>
 </p>
 
+> Version 1.0.0 introduced breaking changes.  
+Please check [How to use?](#how-to-use) for more information.
+
 ## What's the use?
 Made for easier use of the [Polyfill.io API](polyfill.io) to detect browser support and offer dynamic polyfills.
 
