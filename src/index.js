@@ -1,34 +1,47 @@
-function polyfill({ fills, options, minify = true, rum = true, afterFill }) {
+function polyfill({ fills, options = '', minify = true, rum = true, afterFill }) {
 
 
-    let formattedFills,
-        listedFills,
-        winObjs
+    let needsPolyfill = [] // contains list of all to be polyfilled features
 
 
-    if( fills !== undefined ) {
-
-        formattedFills = fills.replace(/\s/g, ''),
-        listedFills    = formattedFills.split(',')
-        winObjs        = []
-
-        listedFills.map(fill => winObjs.push(window[fill]))
+    // check if 'always' flag is set
+    // if yes, no need to check for support since polyfills are loaded anyway
+    if( options.indexOf('always') === -1 ) {
 
 
-        if( winObjs.indexOf(undefined) === -1 ) {
-            afterFill()
-            return
+        if( fills !== undefined ) {
+
+            fills.forEach(fill => {
+
+                // set the fill against the window object
+                let reducedFill = fill.split('.').reduce((k, v) => k[v], window)
+
+                // check if window supports the fill
+                if( reducedFill === undefined ) {
+                    needsPolyfill.push(fill)
+                }
+
+            })
+
+            // if no polyfills are needed, run callback
+            if( needsPolyfill.length === 0 ) {
+                afterFill()
+                return
+            }
         }
+
+    } else {
+        needsPolyfill = fills
     }
 
 
     let min      = minify ? '.min' : '',
 
-        features = fills ? `features=${formattedFills}` : '',
+        features = fills ? `features=${needsPolyfill.join(',')}` : '',
 
-        flags    = options ? `&flags=${options.replace(/\s/g, '')}` : '',
+        flags    = options ? `\&flags=${options.join(',')}` : '',
 
-        monitor  = rum ? '&rum=1' : '', // not set to rum=0 since it loads scripts anyway
+        monitor  = rum ? '\&rum=1' : '', // not set to rum=0 since it loads scripts anyway
 
         js       = document.createElement('script')
 
