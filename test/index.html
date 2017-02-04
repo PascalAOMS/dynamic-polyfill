@@ -21,7 +21,7 @@
             fills: ['Element.prototype.after', 'fetch'],
             minify: false,
             rum: false,
-            afterFill() {
+            afterFill: function() {
                 fetchData()
                 elementAfter()
             }
