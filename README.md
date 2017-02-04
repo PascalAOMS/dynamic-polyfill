@@ -3,11 +3,11 @@
 | 2 KB  | > IE8   |
 
 <p>
-    <a href="https://www.npmjs.com/package/dynamic-polyfill"><img src="https://img.shields.io/david/pascalaoms/dynamic-polyfill.svg" alt="Version"></a>
+    <a href="https://www.npmjs.com/package/dynamic-polyfill"><img src="https://img.shields.io/david/pascalaoms/dynamic-polyfill.svg" alt="Dependencies"></a>
 
     <a href="https://www.npmjs.com/package/dynamic-polyfill"><img src="https://img.shields.io/npm/v/dynamic-polyfill.svg" alt="Version"></a>
 
-    <a href="https://www.npmjs.com/package/dynamic-polyfill"><img src="https://img.shields.io/npm/dm/dynamic-polyfill.svg" alt="Downloads"></a>
+    <a href="https://www.npmjs.com/package/dynamic-polyfill"><img src="https://img.shields.io/npm/dt/dynamic-polyfill.svg" alt="Downloads"></a>
 </p>
 
 > Version 1.0.0 introduced breaking changes.  
