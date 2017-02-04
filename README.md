@@ -1,6 +1,6 @@
 | Size  | Support |
 | ----- | ------- |
-| 2 KB  | >= IE8  |
+| 2 KB  | > IE8   |
 
 <p>
     <a href="https://www.npmjs.com/package/dynamic-polyfill"><img src="https://img.shields.io/david/pascalaoms/dynamic-polyfill.svg" alt="Version"></a>
