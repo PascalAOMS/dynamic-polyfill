@@ -14,7 +14,11 @@ function polyfill({ fills, options = '', minify = true, rum = true, afterFill })
             fills.forEach(fill => {
 
                 // set the fill against the window object
-                let reducedFill = fill.split('.').reduce((k, v) => k[v], window)
+                var reducedFill = (fill.indexOf('~') !== -1)
+                    ? window[fill.split('.')[0]]
+                    : fill.split('.').reduce(function (k, v) {
+                        return k[v];
+                    }, window)
 
                 // check if window supports the fill
                 if( reducedFill === undefined ) {
