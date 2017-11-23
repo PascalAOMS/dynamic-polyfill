@@ -4,17 +4,13 @@
 
 <p>
     <a href="https://www.npmjs.com/package/dynamic-polyfill"><img src="https://img.shields.io/david/pascalaoms/dynamic-polyfill.svg" alt="Dependencies"></a>
-
-    <a href="https://www.npmjs.com/package/dynamic-polyfill"><img src="https://img.shields.io/npm/v/dynamic-polyfill.svg" alt="Version"></a>
-
-    <a href="https://www.npmjs.com/package/dynamic-polyfill"><img src="https://img.shields.io/npm/dt/dynamic-polyfill.svg" alt="Downloads"></a>
 </p>
 
 > Version 1.0.0 introduced breaking changes.  
 Please check [How to use?](#how-to-use) for more information.
 
 ## What's the use?
-Made for easier use of the [Polyfill.io API](polyfill.io) to detect browser support and offer dynamic polyfills.
+Made for easier use of the [Polyfill.io API](polyfill.io) to detect browser support, offer dynamic polyfills and save an extra HTTP request.
 
 Write modern code like fetch, Promise or Array.prototype.includes without the need to transform it or locally load a polyfill.
 
@@ -96,3 +92,7 @@ function main() {
         .then(res => res.json())
 }
 ```
+
+## Usage in IE8
+For usage in IE8, you need a polyfill for `Array.prototype.reduce()`.
+You may copy the polyfill code from [MDN](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce).
