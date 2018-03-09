@@ -1,41 +1,54 @@
-function polyfill({ fills, options = '', minify = true, rum = true, afterFill }) {
+function polyfill({
+  fills,
+  options = '',
+  minify = true,
+  rum = true,
+  afterFill
+}) {
+  const fillAlways = options.indexOf('always') >= 0;   // check if 'always' flag is set
 
-  // contains list of all to be polyfilled features
-  let needsPolyfill = [];
+  let neededPolyfills = []; // contains list of all features to be polyfilled
 
-  // check if 'always' flag is set
-  // if yes, no need to check for support since polyfills are loaded anyway
-  if (options.indexOf('always') === -1) {
-
-    if (fills !== undefined) {
-
-      for (let i = 0; i < fills.length; i++) {
-        const fill = fills[i];
-
-        // set the fill against the window object
-        const reducedFill = (fill.indexOf('~') !== -1)
-          ? window[fill.split('.')[0]]
-          : fill.split('.').reduce((k, v) => k[v], window);
-
-        // check if window supports the fill
-        if (reducedFill === undefined) {
-          needsPolyfill.push(fill);
-        }
-
-      }
-
-      // if no polyfills are needed, run callback
-      if (needsPolyfill.length === 0) {
-        return afterFill();
-      }
+  if (fillAlways) {
+    neededPolyfills = fills
+  } else {
+    if (fills === undefined) {
+      return new Error('No fills specified.')
     }
 
-  } else {
-    needsPolyfill = fills
+    for (let i = 0; i < fills.length; i++) {
+      const fill  = fills[i];
+      const parts = fill.split('.');
+
+      const isIntl    = parts[0] === 'Intl';  // check for Intl.~locale
+      const isElement = parts[0] === 'Element';  // for Element.prototype.classList
+
+      let isSupported = false;
+
+      if (isIntl) {
+        isSupported = window[parts[0]];
+      } else if (isElement) {
+        isSupported = ('Element' in window && 'classList' in Element.prototype);
+      } else {
+        parts.reduce((key, value) => key[value], window);
+      }
+
+      if (!isSupported) {
+        neededPolyfills.push(fill);
+      }
+
+    }
+
+    // if no polyfills are needed, run callback
+    if (neededPolyfills.length === 0) {
+      return afterFill();
+    }
+
+
   }
 
   const min      = minify  ? '.min' : '';
-  const features = fills   ? `features=${needsPolyfill.join(',')}` : '';
+  const features = fills   ? `features=${neededPolyfills.join(',')}` : '';
   const flags    = options ? `\&flags=${options.join(',')}` : '';
   const monitor  = rum     ? '\&rum=1' : ''; // not set to rum=0 since it loads scripts anyway
 

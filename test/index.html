@@ -7,30 +7,34 @@
 <body>
 
     <h1>Dynamic Polyfill</h1>
-    <p>Testing 'fetch' and 'Element.prototype.after'.<br>
+    <p>Testing 'Element.prototype.classList', 'fetch' and 'Element.prototype.after'.<br>
     Check <a href="https://polyfill.io/v2/docs/features/">https://polyfill.io/v2/docs/features/</a>
     to see if supported in your browser.<br>
     <br>
     Open the console to see the output.</p>
 
 
-    <script src="../src/index.js"></script>
+    <script src="../index.js"></script>
     <script>
 
         polyfill({
-            fills: ['Element.prototype.after', 'fetch'],
+            fills: [
+              'Element.prototype.classList',
+              'fetch',
+              'Element.prototype.after'
+            ],
             minify: false,
             rum: false,
             afterFill: function() {
-                fetchData()
-                elementAfter()
+              document.body.classList.add('test');
+               fetchData();
+               elementAfter();
             }
-        })
+        });
 
 
         // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
         function fetchData() {
-
             fetch('https://api.github.com/users/pascalaoms')
                 .then(function(res) {
                     console.log('fetch:', res)
@@ -44,11 +48,11 @@
                 child  = document.createElement('p'),
                 span   = document.createElement('span');
 
-            parent.appendChild(child)
+            parent.appendChild(child);
 
-            child.after(span)
+            child.after(span);
 
-            console.log('Element.after:', parent.outerHTML)
+            console.log('Element.after:', parent.outerHTML);
         }
     </script>
 

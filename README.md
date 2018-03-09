@@ -1,13 +1,10 @@
-| Size  | Support |
-| ----- | ------- |
-| 2 KB  | > IE8   |
+| Size   | Support             |
+| ------ | ------------------- |
+| ~1 KB  | > IE8 (see below)   |
 
 <p>
     <a href="https://www.npmjs.com/package/dynamic-polyfill"><img src="https://img.shields.io/david/pascalaoms/dynamic-polyfill.svg" alt="Dependencies"></a>
 </p>
-
-> Version 1.0.0 introduced breaking changes.  
-Please check [How to use?](#how-to-use) for more information.
 
 ## What's the use?
 Made for easier use of the [Polyfill.io API](polyfill.io) to detect browser support, offer dynamic polyfills and save an extra HTTP request.
@@ -23,11 +20,11 @@ If not, it creates a link like `https://cdn.polyfill.io/v2/polyfill.js?features=
 The tag is put at the bottom of the page with the `async` attribute.
 
 ## How to use?
-NPM: `npm i dynamic-polyfill -S`  
+NPM: `npm i dynamic-polyfill`  
 Yarn: `yarn add dynamic-polyfill`
 
-```javascript
-import polyfill from 'dynamic-polyfill'
+```js
+import polyfill from 'dynamic-polyfill';
 // or use require:
 // const polyfill = require('dynamic-polyfill')
 
@@ -37,9 +34,9 @@ polyfill({
     minify: false,
     rum: false,
     afterFill() {
-        // callback
+      // callback
     }
-})
+});
 ```
 
 _**Note:** As of now not all available API options are supported here. [Take a look at the full reference list.](https://polyfill.io/v2/docs/api)_
@@ -54,8 +51,13 @@ If empty, as default marked features on the website are being used.
 `['gated', 'always']` (default: empty)
 
 **always**  
-    Polyfill should be included regardless of whether it is required by the user-agent making the request. If there are multiple browser-specific variants of the polyfill, the default one will be used for browser that doesn't actually require the polyfill. In some cases where the only way of implementing a polyfill is to use browser-specific proprietary technology, the default variant may be empty.
-
+    Polyfill should be included regardless of whether it is required by the user-agent making the request. 
+    If there are multiple browser-specific variants of the polyfill, 
+    the default one will be used for browser that doesn't actually require the polyfill. 
+    In some cases where the only way of implementing a polyfill is to use browser-specific
+    proprietary technology, the default variant may be empty. 
+    Use in combination with `gated` to avoid console errors.
+    
 **gated**  
     If the polyfill is included in the bundle, it will be accompanied by a feature detect, which will only execute the polyfill if the native API is not present.
 
@@ -79,20 +81,30 @@ Allows the polyfill service to gather performance data about itself using the [r
 Put your modern code in this callback to make sure the polyfills are loaded first.
 
 Example:
-```javascript
+```js
 polyfill({
     fills: ['fetch'],
     afterFill() {
-        main()
+      main();
     }
-})
+});
 
 function main() {
     fetch(url)
-        .then(res => res.json())
+      .then(res => res.json());
 }
 ```
 
 ## Usage in IE8
 For usage in IE8, you need a polyfill for `Array.prototype.reduce()`.
-You may copy the polyfill code from [MDN](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce).
+You may copy the polyfill code from [MDN](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce).  
+Run it before **dynamic-polyfill**.
+
+## Not supported Fills
+* ~html5-elements
+* ~viewport
+
+Use `always` flag for these.  
+There might be more. I have not tested all of them.  
+If you find a not supported fill, please leave a quick issue message.  
+All the most used fills are supported.
