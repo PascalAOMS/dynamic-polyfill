@@ -23,10 +23,11 @@
               'fetch',
               'Element.prototype.after'
             ],
-            minify: false,
             rum: false,
+            minify: false,
+            agent: 'ie/11.0.0',
             afterFill: function() {
-              document.body.classList.add('test');
+               document.body.classList.add('test');
                fetchData();
                elementAfter();
             }
