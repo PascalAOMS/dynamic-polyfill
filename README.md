@@ -14,10 +14,10 @@ Write modern code like fetch, Promise or Array.prototype.includes without the ne
 > _**Note:** Does not polyfill syntactic sugar like **Classes, enhanced Object literals** and features like **Arrow Functions** or **Template Strings**. Use compilers like Babel for that._
 
 ## How does it work?
-The module tests the given functions in `fills` (see below) against the window to check if the browser supports everything.
+The module tests the given functions in `fills` (see below) against the window object to check if the browser supports them.
 
-If not, it creates a link like `https://cdn.polyfill.io/v2/polyfill.js?features=fetch`, inserts a script tag to make the HTTP request and loads only the needed polyfills.  
-The tag is put at the bottom of the page with the `async` attribute.
+If not, it creates a link to the API service (i.e.`https://cdn.polyfill.io/v2/polyfill.js?features=fetch`) to load only the needed polyfills.  
+The script tag is put at the bottom of the page with the `async` attribute.
 
 ## How to use?
 NPM: `npm i dynamic-polyfill`  
@@ -29,17 +29,15 @@ import polyfill from 'dynamic-polyfill';
 // const polyfill = require('dynamic-polyfill')
 
 polyfill({
-    fills: ['fetch', 'Array.prototype.includes'],
-    options: ['gated', 'always'],
-    minify: false,
-    rum: false,
-    afterFill() {
-      // callback
-    }
+  fills: ['fetch', 'Array.prototype.includes'],
+  options: ['gated', 'always'],
+  minify: false,
+  rum: false,
+  afterFill() {
+    // callback
+  }
 });
 ```
-
-_**Note:** As of now not all available API options are supported here. [Take a look at the full reference list.](https://polyfill.io/v2/docs/api)_
 
 ### Fills
 `['fetch', 'Array.prototype.includes']` (default: empty)  
@@ -66,7 +64,6 @@ If empty, as default marked features on the website are being used.
 Set to false for deeper insight of what is being polyfilled.
 
 
-
 ### Real User Monitoring
 `rum: false` (default: true)  
 Allows the polyfill service to gather performance data about itself using the [resource timing API](https://developer.mozilla.org/en-US/docs/Web/API/Resource_Timing_API/Using_the_Resource_Timing_API) and to perform feature detection to improve our browser targeting.
@@ -77,21 +74,34 @@ Allows the polyfill service to gather performance data about itself using the [r
 > The service will default it to true in the future hence the module default choice. Set `rum: false` if you want to opt out.
 
 
+### User Agent
+`agent: 'ie/11.0.0'` (default: empty)  
+Used to override the `User-Agent` string.  
+Set to `polyfill` to return default polyfill variants of all qualifying features.
+Useful if the polyfill service is being used from the server-side, and in that scenario, this is preferable to setting an inaccurate `User-Agent` header (the `User-Agent` header should properly be set to a string identifying the client you are using to make the request - for server side requests that might be cURL, for example).
+
+
+### User Agent Fallback
+`agentFallback: 'polyfill` (default: empty)  
+What to do when the user agent is not recognised.  
+Use caution when setting this argument to `polyfill` on large feature sets, since huge polyfill bundles may cause crashes or lockups in extremely old or underpowered user agents.
+
+
 ### After Fill
 Put your modern code in this callback to make sure the polyfills are loaded first.
 
 Example:
 ```js
 polyfill({
-    fills: ['fetch'],
-    afterFill() {
-      main();
-    }
+  fills: ['fetch'],
+  afterFill() {
+    main();
+  }
 });
 
 function main() {
-    fetch(url)
-      .then(res => res.json());
+  fetch(url)
+    .then(res => res.json());
 }
 ```
 
@@ -100,11 +110,13 @@ For usage in IE8, you need a polyfill for `Array.prototype.reduce()`.
 You may copy the polyfill code from [MDN](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce).  
 Run it before **dynamic-polyfill**.
 
+It is not included in this package to keep it as small as possible.
+
 ## Not supported Fills
 * ~html5-elements
 * ~viewport
 
 Use `always` flag for these.  
 There might be more. I have not tested all of them.  
-If you find a not supported fill, please leave a quick issue message.  
+If you find a not supported fill, please leave a quick [issue message on Github](https://github.com/PascalAOMS/dynamic-polyfill/issues).  
 All the most used fills are supported.
