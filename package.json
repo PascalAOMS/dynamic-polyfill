@@ -1,10 +1,11 @@
 {
   "name": "dynamic-polyfill",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Dynamically polyfill only when needed by the browser. Complementary to Polyfill.io",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir ./"
+    "build": "webpack",
+    "build2": "babel src --out-dir ./"
   },
   "repository": {
     "type": "git",
@@ -28,8 +29,10 @@
   },
   "babelrc": false,
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.40",
-    "@babel/core": "^7.0.0-beta.40",
-    "@babel/preset-env": "^7.0.0-beta.40"
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
   }
 }

@@ -62,7 +62,6 @@ function checkSupport(fills) {
   return unsupportedFills;
 }
 
-
 function loadScript(args) {
   const min      = args.minify  ? '.min' : '';
   const features = args.fills   ? `features=${args.neededPolyfills.join(',')}` : '';
@@ -73,7 +72,7 @@ function loadScript(args) {
 
   const js = document.createElement('script');
 
-  js.src = `https://cdn.polyfill.io/v2/polyfill${min}.js?${features + flags + monitor + agent + fallback}`;
+  js.src = `https://polyfill.io/v3/polyfill${min}.js?${features + flags + monitor + agent + fallback}`;
   js.async = true;
 
   document.body.appendChild(js);
@@ -82,5 +81,4 @@ function loadScript(args) {
   js.onerror = () => { throw new Error('Error loading polyfills. Open a ticket: https://github.com/PascalAOMS/dynamic-polyfill/issues') };
 }
 
-
-module.exports = polyfill;
+export default polyfill;
